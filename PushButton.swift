@@ -11,6 +11,9 @@ import UIKit
 @IBDesignable
 class PushButton: UIButton {
     
+    @IBInspectable var fillColor: UIColor = UIColor.green
+    @IBInspectable var isAddButton: Bool = true
+    
     private var halfWidth: CGFloat {
         return bounds.width / 2
     }
@@ -21,7 +24,7 @@ class PushButton: UIButton {
     
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(ovalIn: rect)
-        UIColor.blue.setFill()
+        fillColor.setFill()
         path.fill()
         
         //set up the width and height variables
@@ -44,16 +47,18 @@ class PushButton: UIButton {
             x: halfWidth + halfPlusWidth + Constants.halfPointShift,
             y: halfHeight + Constants.halfPointShift))
         
-        //move the initial point of the path
-        //to the start of the vertical stroke
-        plusPath.move(to: CGPoint(
-            x: halfWidth + Constants.halfPointShift,
-            y: halfHeight - halfPlusWidth + Constants.halfPointShift))
-        
-        //add a point to the path at the end of the stroke
-        plusPath.addLine(to: CGPoint(
-            x: halfWidth + Constants.halfPointShift,
-            y: halfHeight + halfPlusWidth + Constants.halfPointShift))
+        if isAddButton {
+            //move the initial point of the path
+            //to the start of the vertical stroke
+            plusPath.move(to: CGPoint(
+                x: halfWidth + Constants.halfPointShift,
+                y: halfHeight - halfPlusWidth + Constants.halfPointShift))
+            
+            //add a point to the path at the end of the stroke
+            plusPath.addLine(to: CGPoint(
+                x: halfWidth + Constants.halfPointShift,
+                y: halfHeight + halfPlusWidth + Constants.halfPointShift))
+        }
         
         //set the stroke color
         UIColor.white.setStroke()
